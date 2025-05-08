@@ -82,10 +82,14 @@ class BlockManager {
      *
      * @param array $attributes 區塊屬性
      * @return string 渲染後的 HTML
-     */
+     */    
     public function render_md_block($attributes) {
+        // 確保有內容要渲染
         $content = isset($attributes['content']) ? $attributes['content'] : '';
-        return '<div class="mdlite-content">' . $content . '</div>';
+        
+        // 調用 MDRender 的渲染方法
+        return $this->md_render->render_markdown_block([
+            'content' => $content
+        ]);
     }
-
 }
