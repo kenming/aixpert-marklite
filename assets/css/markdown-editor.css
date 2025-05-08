@@ -5,7 +5,45 @@
     border-radius: 4px;
     padding: 15px;
     background-color: #f8f9fa;
+    /* 移除 width: 100%，改為使用固定寬度 */
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    display: block; /* 確保元素為區塊元素 */
 }
+
+/* 針對不同螢幕寬度的媒體查詢 */
+/* 小螢幕 (<=480px): 寬度為 420px */
+@media screen and (max-width: 480px) {
+    .mdlite-editor {
+        width: 400px;
+        max-width: 95%; /* 避免在極小螢幕上出現水平捲軸 */
+    }
+}
+
+/* 中等螢幕 (<768px): 寬度為 680px */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .mdlite-editor {
+        width: 640px;
+        max-width: 95%; /* 確保不會超出螢幕 */
+    }
+}
+
+/* 大螢幕 (>960px): 寬度為 760px */
+@media screen and (min-width: 961px) {
+    .mdlite-editor {
+        width: 840px;
+    }
+}
+
+/* 處理 768px-960px 之間的螢幕 */
+@media screen and (min-width: 768px) and (max-width: 960px) {
+    .mdlite-editor {
+        width: 720px;
+        max-width: 95%; /* 確保不會超出螢幕 */
+    }
+}
+
 
 .mdlite-editor textarea {
     width: 100%;
@@ -13,10 +51,11 @@
     font-size: 14px;
     line-height: 1.5;
     resize: vertical;
-    min-height: 200px;
+    min-height: 400px; /* 增加高度 */
     border: 1px solid #ddd;
     border-radius: 3px;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 /* 模式切換按鈕樣式 */
@@ -28,12 +67,14 @@
 
 /* 預覽區域樣式 */
 .mdlite-preview {
-    min-height: 200px;
+    min-height: 400px;
     border: 1px solid #ddd;
     border-radius: 3px;
     padding: 15px;
     background-color: #fff;
     overflow-y: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* 預覽區域內容樣式 - 重用 markdown-render.css 的樣式 */
