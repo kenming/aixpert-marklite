@@ -42,15 +42,21 @@ class BlockManager {
         ]);
     }
 
-        /**
-     * 載入編輯器資源
-     */
     public function enqueue_editor_assets() {
+        // 載入 markdown-it 庫 (從 CDN)
+        wp_enqueue_script(
+            'markdown-it',
+            'https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js',
+            array(),
+            '14.1.0',
+            true
+        );
+        
         // 載入 JS
         wp_enqueue_script(
             'mdlite-editor-script',
             plugin_dir_url(dirname(__FILE__)) . 'assets/js/markdown-editor.js',
-            array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
+            array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'markdown-it'),
             filemtime(plugin_dir_path(dirname(__FILE__)) . 'assets/js/markdown-editor.js'),
             true
         );
@@ -63,6 +69,7 @@ class BlockManager {
             filemtime(plugin_dir_path(dirname(__FILE__)) . 'assets/css/markdown-editor.css')
         );
     }
+    
 
     /**
      * 載入前台樣式
