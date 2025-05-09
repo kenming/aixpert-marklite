@@ -24,12 +24,12 @@ class Loader {
     }
     
     /**
-     * 初始化 MDRenderer 類別
+     * 初始化 MarkItRenderer 類別
      */
     private function init_render() {
         if (self::$render === null) {
-            // 實例化 MDRenderer
-            self::$render = new \Thinksoft\AiXpertMarkLite\MDRender();
+            // 實例化 MarkItRenderer
+            self::$render = new \Thinksoft\AiXpertMarkLite\MarkItRender();
             
             // 註冊短代碼以測試 render_markdown_block 方法
             add_shortcode('mdlite', function($atts) {

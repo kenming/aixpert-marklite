@@ -2,7 +2,7 @@
 
 namespace Thinksoft\AiXpertMarkLite;
 
-class MDRender {
+class MarkItRender {
     /**
      * 構造函數
      */

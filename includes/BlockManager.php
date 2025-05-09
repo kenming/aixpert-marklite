@@ -4,16 +4,16 @@ namespace Thinksoft\AiXpertMarkLite;
 
 class BlockManager {
     /**
-     * MDRender 實例
+     * MarkItRender 實例
      */
     private $md_render;
     
     /**
      * 構造函數
      *
-     * @param MDRender $md_render MDRender 實例
+     * @param MarkItRender $md_render MarkItRender 實例
      */
-    public function __construct(MDRender $md_render) {
+    public function __construct(MarkItRender $md_render) {
         $this->md_render = $md_render;
         
         // 註冊區塊
@@ -22,8 +22,6 @@ class BlockManager {
         // 載入編輯器資源
         add_action('enqueue_block_editor_assets', array($this, 'enqueue_editor_assets'));
         
-        // 載入前台樣式
-        // add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_styles'));
     }
     
     /**
@@ -42,16 +40,7 @@ class BlockManager {
         ]);
     }
 
-    public function enqueue_editor_assets() {
-        // 載入 markdown-it 庫 (從 CDN)
-        wp_enqueue_script(
-            'markdown-it',
-            'https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js',
-            array(),
-            '14.1.0',
-            true
-        );
-        
+    public function enqueue_editor_assets() {        
         // 載入 JS
         wp_enqueue_script(
             'mdlite-editor-script',
@@ -69,23 +58,10 @@ class BlockManager {
             filemtime(plugin_dir_path(dirname(__FILE__)) . 'assets/css/markdown-editor.css')
         );
     }
-    
+       
 
     /**
-     * 載入前台樣式
-    *  
-    * public function enqueue_frontend_styles() {
-    *     wp_enqueue_style(
-    *         'mdlite-styles',
-    *         plugin_dir_url(dirname(__FILE__)) . 'assets/css/markdown-editor.css',
-    *         array(),
-    *         filemtime(plugin_dir_path(dirname(__FILE__)) . 'assets/css/markdown-editor.css')
-    *     );
-    * }   
-    */     
-
-    /**
-     * 簡單區塊渲染函數
+     * Markdown 區塊渲染函數
      *
      * @param array $attributes 區塊屬性
      * @return string 渲染後的 HTML
@@ -94,7 +70,7 @@ class BlockManager {
         // 確保有內容要渲染
         $content = isset($attributes['content']) ? $attributes['content'] : '';
         
-        // 調用 MDRender 的渲染方法
+        // 調用 MarkItRender 的渲染方法
         return $this->md_render->render_markdown_block([
             'content' => $content
         ]);
