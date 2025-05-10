@@ -6,28 +6,35 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
-    // 初始化 markdown-it 解析器，啟用一些常用選項
-    const md = window.markdownit({
-        html: false,        // 禁用 HTML 標籤以增加安全性
-        xhtmlOut: true,     // 使用 '/' 閉合單標籤 (<br />)
-        breaks: true,       // 將換行符轉換為 <br>
-        linkify: true,      // 自動轉換 URL 為連結
-        typographer: true,  // 啟用一些語言中性的替換 + 引號美化
+    // 初始化 markdown-it
+    let md = window.markdownit({
+        html: true,
+        linkify: true,
+        typographer: true
     });
     
-    // 查找所有 Markdown 區塊並渲染
-    const mdBlocks = document.querySelectorAll('.mdlite-content');
-    mdBlocks.forEach(function(block) {
-        const markdown = block.getAttribute('data-markdown');
-        const renderedDiv = block.querySelector('.mdlite-rendered');
-        const loadingDiv = block.querySelector('.mdlite-loading');
+    // 檢查並載入啟用的插件
+    if (typeof mdliteSettings !== 'undefined' && mdliteSettings.enabledPlugins) {
+        // 啟用表格插件
+        if (mdliteSettings.enabledPlugins.includes('table') && typeof window.markdownitTable !== 'undefined') {
+            md = md.use(window.markdownitTable);
+        }
+    }
+    
+    // 尋找所有 Markdown 內容區塊
+    const mdContainers = document.querySelectorAll('.mdlite-content');
+    
+    mdContainers.forEach(function(container) {
+        const markdownContent = container.getAttribute('data-markdown');
+        const loadingDiv = container.querySelector('.mdlite-loading');
+        const renderedDiv = container.querySelector('.mdlite-rendered');
         
-        if (markdown && renderedDiv) {
-            // 渲染 Markdown 為 HTML
-            const html = md.render(markdown);
-            renderedDiv.innerHTML = html;
+        if (markdownContent && renderedDiv) {
+            // 渲染 Markdown 內容
+            const renderedHTML = md.render(markdownContent);
+            renderedDiv.innerHTML = renderedHTML;
             
-            // 隱藏載入提示，顯示渲染內容
+            // 隱藏載入提示，顯示渲染結果
             if (loadingDiv) loadingDiv.style.display = 'none';
             renderedDiv.style.display = 'block';
         }

@@ -4,24 +4,29 @@ namespace Thinksoft\AiXpertMarkLite;
 
 class BlockManager {
     /**
-     * MarkItRender 實例
+     * MarkItRender & SettingManager 實例
      */
     private $md_render;
+    private $setting_manager;
     
     /**
      * 構造函數
      *
      * @param MarkItRender $md_render MarkItRender 實例
+     * @param SettingManager $setting_manager SettingManager 實例
      */
-    public function __construct(MarkItRender $md_render) {
+    public function __construct(MarkItRender $md_render, SettingManager $setting_manager) {
         $this->md_render = $md_render;
+        $this->setting_manager = $setting_manager;
+        
+        // 設置啟用的插件
+        $this->md_render->set_enabled_plugins($this->setting_manager->get_enabled_plugins());
         
         // 註冊區塊
         add_action('init', array($this, 'register_blocks'));
 
         // 載入編輯器資源
         add_action('enqueue_block_editor_assets', array($this, 'enqueue_editor_assets'));
-        
     }
     
     /**

@@ -1,0 +1,68 @@
+```mermaid
+classDiagram
+    %% AiXpert MarkLite 類別圖 - Mermaid 格式
+
+    %% 類別定義
+    class AutoLoader {
+        +spl_autoload_register()$
+    }
+
+    class MarkItRender {
+        -enabled_plugins: array
+        +__construct()
+        +set_enabled_plugins(plugins: array): void
+        +register_markdown_assets(): void
+        +load_markdown_plugins(enabled_plugins: array): void
+        +render_markdown_block(attributes: array): string
+    }
+
+    class SettingManager {
+        -SETTINGS_GROUP: string$
+        -STYLE_OPTION: string$
+        -PLUGIN_OPTIONS: string$
+        +__construct()
+        +add_settings_page(): void
+        +register_settings(): void
+        +render_plugins_section(): void
+        +render_table_plugin_field(): void
+        +sanitize_plugin_options(input: array): array
+        +render_settings_page(): void
+        +get_enabled_plugins(): array
+    }
+
+    class BlockManager {
+        -md_render: MarkItRender
+        -setting_manager: SettingManager
+        +__construct(md_render: MarkItRender, setting_manager: SettingManager)
+        +register_blocks(): void
+        +enqueue_editor_assets(): void
+        +render_md_block(attributes: array): string
+    }
+
+    class Loader {
+        -render: MarkItRender$
+        -settings_manager: SettingManager$
+        -block_manager: BlockManager$
+        +init(): void
+        -init_render(): void
+        -init_settings_manager(): void
+        -init_block_manager(): void
+        +get_renderer(): MarkItRender$
+        +get_settings_manager(): SettingManager$
+        +get_block_manager(): BlockManager$
+    }
+
+    %% 關係定義
+    Loader ..> MarkItRender : 創建
+    Loader ..> SettingManager : 創建
+    Loader ..> BlockManager : 創建
+    BlockManager o-- MarkItRender : 依賴
+    BlockManager o-- SettingManager : 依賴
+
+    %% 註解 (使用類別描述)
+    note for AutoLoader "負責自動載入插件命名空間中的類別"
+    note for Loader "核心載入器，負責初始化和管理所有組件"
+    note for MarkItRender "處理 Markdown 渲染邏輯"
+    note for SettingManager "管理插件設定和選項"
+    note for BlockManager "處理 Gutenberg 區塊註冊和渲染"
+```

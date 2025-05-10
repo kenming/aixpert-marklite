@@ -17,7 +17,7 @@
 @media screen and (max-width: 480px) {
     .mdlite-editor {
         width: 400px;
-        max-width: 95%; /* 避免在極小螢幕上出現水平捲軸 */
+        max-width: 96%; /* 避免在極小螢幕上出現水平捲軸 */
     }
 }
 
@@ -25,25 +25,17 @@
 @media screen and (min-width: 481px) and (max-width: 767px) {
     .mdlite-editor {
         width: 640px;
-        max-width: 95%; /* 確保不會超出螢幕 */
+         /* max-width: 96%; 確保不會超出螢幕 */
     }
 }
 
 /* 大螢幕 (>960px): 寬度為 760px */
-@media screen and (min-width: 961px) {
-    .mdlite-editor {
-        width: 840px;
-    }
-}
-
-/* 處理 768px-960px 之間的螢幕 */
-@media screen and (min-width: 768px) and (max-width: 960px) {
+@media screen and (min-width: 768px) {
     .mdlite-editor {
         width: 720px;
-        max-width: 95%; /* 確保不會超出螢幕 */
+        /* max-width: 96%;  確保不會超出螢幕 */
     }
 }
-
 
 .mdlite-editor textarea {
     width: 100%;

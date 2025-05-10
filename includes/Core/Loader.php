@@ -29,12 +29,7 @@ class Loader {
     private function init_render() {
         if (self::$render === null) {
             // 實例化 MarkItRenderer
-            self::$render = new \Thinksoft\AiXpertMarkLite\MarkItRender();
-            
-            // 註冊短代碼以測試 render_markdown_block 方法
-            add_shortcode('mdlite', function($atts) {
-                return self::$render->render_markdown_block($atts);
-            });
+            self::$render = new \Thinksoft\AiXpertMarkLite\MarkItRender();            
         }
     }
 
@@ -54,7 +49,8 @@ class Loader {
     private function init_block_manager() {
         if (self::$block_manager === null) {
             // 使用已經初始化的渲染器實例
-            self::$block_manager = new \Thinksoft\AiXpertMarkLite\BlockManager(self::$render);
+            self::$block_manager = new \Thinksoft\AiXpertMarkLite\BlockManager
+                (self::$render, self::$settings_manager);
         }
     }
     
